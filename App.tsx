@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import React from 'react';
+import { NativeBaseProvider, Box } from 'native-base';
+import { QueryClient, QueryClientProvider } from 'react-query';
 export default function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+        retry: false,
+        staleTime: 60 * 60 * 1000,
+        onError(err: unknown | Error) {
+          // if ((err as Error)?.message === ErrorService.MESSAGES.forbidden) {
+          //   return ErrorService.handler({
+          //     message: 'You do not have permission to access this data.',
+          //   });
+          // }
+          // ErrorService.handler(err);
+          return err;
+        },
+      },
+      mutations: {
+        onError(err: any) {
+          // if ((err as Error)?.message === ErrorService.MESSAGES.forbidden) {
+          //   return ErrorService.handler({
+          //     message: 'You do not have permission to trigger this action.',
+          //   });
+          // }
+          // ErrorService.handler(err);
+          return err;
+        },
+      },
+    },
+  });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NativeBaseProvider>
+      <QueryClientProvider client={queryClient}>
+        <Box backgroundColor={'#fff'}>Hello world</Box>
+      </QueryClientProvider>
+    </NativeBaseProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
