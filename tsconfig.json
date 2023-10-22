@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,20 +15,23 @@
     "noImplicitAny": false,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "./node_modules/@types/",
-      "src/global.d.ts"
-    ]
+    "baseUrl": ".",
+    "paths": {
+      "@appConfig": ["src/appConfig"],
+      "@appConfig/*": ["src/appConfig/*"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@shared": ["src/shared"],
+      "@shared/*": ["src/shared/*"],
+      "@redux": ["src/redux"],
+      "@redux/*": ["src/redux/*"],
+      "@queries": ["src/queries"],
+      "@queries/*": ["src/queries/*"]
+    },
+    "typeRoots": ["./node_modules/@types/", "src/global.d.ts"]
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/__mocks__/*.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/__mocks__/*.ts"],
   "extends": "expo/tsconfig.base"
 }

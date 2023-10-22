@@ -1,6 +1,9 @@
 import React from 'react';
-import { NativeBaseProvider, Box } from 'native-base';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { PaperProvider, ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { theme } from '@appConfig/theme';
+import { ONE_HOUR } from '@appConfig/constants';
+
 export default function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -8,7 +11,7 @@ export default function App() {
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
         retry: false,
-        staleTime: 60 * 60 * 1000,
+        staleTime: ONE_HOUR,
         onError(err: unknown | Error) {
           // if ((err as Error)?.message === ErrorService.MESSAGES.forbidden) {
           //   return ErrorService.handler({
@@ -34,10 +37,10 @@ export default function App() {
   });
 
   return (
-    <NativeBaseProvider>
+    <PaperProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Box backgroundColor={'#fff'}>Hello world</Box>
+        <ActivityIndicator animating={true} color={MD2Colors.red800} />
       </QueryClientProvider>
-    </NativeBaseProvider>
+    </PaperProvider>
   );
 }
