@@ -1,8 +1,8 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { PaperProvider, ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { theme } from '@appConfig/theme';
 import { ONE_HOUR } from '@appConfig/constants';
+import { NativeBaseProvider, Box } from 'native-base';
+import { theme } from '@appConfig/theme';
 
 export default function App() {
   const queryClient = new QueryClient({
@@ -37,10 +37,10 @@ export default function App() {
   });
 
   return (
-    <PaperProvider theme={theme}>
+    <NativeBaseProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <ActivityIndicator animating={true} color={MD2Colors.red800} />
+        <Box bg={'primary.200'}>Hello world</Box>
       </QueryClientProvider>
-    </PaperProvider>
+    </NativeBaseProvider>
   );
 }

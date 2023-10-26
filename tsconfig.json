@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@appConfig": ["src/appConfig"],
       "@appConfig/*": ["src/appConfig/*"],
@@ -31,7 +31,7 @@
     },
     "typeRoots": ["./node_modules/@types/", "src/global.d.ts"]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "**/*.spec.ts", "**/__mocks__/*.ts"],
   "extends": "expo/tsconfig.base"
 }
