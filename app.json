@@ -4,10 +4,10 @@
     "slug": "pbl6-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/image/big-logo.png",
+    "icon": "./src/assets/image/big-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/image/big-logo.png",
+      "image": "./src/assets/image/big-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,15 +17,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/image/big-logo.png",
+        "foregroundImage": "./src/assets/image/big-logo.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/image/big-logo.png"
+      "favicon": "./src/assets/image/big-logo.png"
     },
     "experiments": {
-      "tsconfigPaths": false
+      "tsconfigPaths": true
     }
   }
 }

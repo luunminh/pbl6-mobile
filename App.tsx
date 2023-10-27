@@ -1,8 +1,9 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ONE_HOUR } from '@appConfig/constants';
-import { NativeBaseProvider, Box } from 'native-base';
-import { theme } from '@appConfig/theme';
+import { ONE_HOUR } from './src/appConfig/constants';
+import { NativeBaseProvider } from 'native-base';
+import { theme } from './src/appConfig/theme';
+import AppContainer from './src/containers';
 
 export default function App() {
   const queryClient = new QueryClient({
@@ -39,7 +40,7 @@ export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Box bg={'primary.200'}>Hello world</Box>
+        <AppContainer />
       </QueryClientProvider>
     </NativeBaseProvider>
   );

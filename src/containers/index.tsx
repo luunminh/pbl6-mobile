@@ -1,9 +1,10 @@
+import { Text, View, Container } from 'native-base';
+import { SplashScreen } from './StartupContainers';
 
+type ContainerProps = {};
 
-type ContainerProps = {}
+const AppContainer: React.FC<ContainerProps> = ({}) => {
+  return <SplashScreen />;
+};
 
-const Container : React.FC<ContainerProps> = ({}) => {
-  return (
-    <View
-  )
-}
+export default AppContainer;

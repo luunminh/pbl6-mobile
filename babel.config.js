@@ -6,14 +6,14 @@ module.exports = function (api) {
       [
         'module-resolver',
         {
-          root: ['.'],
+          extensions: ['.ts', '.tsx', '.js', '.ios.js', '.android.js'],
           alias: {
-            "@components": './src/components',
-            "@shared": './src/shared',
-            "@queries": './src/queries',
-            "@types": './src/types',
-            "@redux": './src/redux',
-            "@appConfig": './src/appConfig',
+            "@components": 'src/components',
+            "@shared": 'src/shared',
+            "@queries": 'src/queries',
+            "@types": 'src/types',
+            "@redux": 'src/redux',
+            "@appConfig": 'src/appConfig',
           },
         },
       ],

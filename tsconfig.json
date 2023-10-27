@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@appConfig": ["src/appConfig"],
       "@appConfig/*": ["src/appConfig/*"],
@@ -31,7 +31,8 @@
     },
     "typeRoots": ["./node_modules/@types/", "src/global.d.ts"]
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "resolveJsonModule": true,
+  "include": ["src", "declaration.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts", "**/__mocks__/*.ts"],
   "extends": "expo/tsconfig.base"
 }
