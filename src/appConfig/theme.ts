@@ -63,4 +63,25 @@ export const theme = extendTheme({
       900: ColorCode.GREY_900,
     },
   },
+  fonts: {
+    heading: 'Mulish',
+    body: 'Mulish',
+    mono: 'Mulish',
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        borderRadius: 12,
+      },
+    },
+    Input: {
+      baseStyle: {
+        borderRadius: 12,
+        borderWidth: 0,
+        borderStyle: `solid`,
+        borderColor: 'red',
+        outLine: 'none',
+      },
+    },
+  },
 });

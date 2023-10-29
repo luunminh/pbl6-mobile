@@ -5,7 +5,7 @@ const SplashScreen = () => {
   return (
     <Center bgColor={'white'} height={'100%'} width={'100%'}>
       <VStack space={3} direction="row" alignItems={'center'}>
-        <Image size="lg" source={IMAGES.logo} />
+        <Image size="lg" source={IMAGES.logo} alt="" />
         <Text fontSize={35} color={'primary.600'} fontWeight={600}>
           MALT
         </Text>

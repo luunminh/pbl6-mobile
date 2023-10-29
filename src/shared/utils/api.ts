@@ -1,4 +1,3 @@
-import { Toastify } from '@shared/services';
 import { isEmpty } from './validation';
 
 type ApiCall = (..._args: any[]) => Promise<any>;
@@ -36,7 +35,7 @@ export async function responseWrapper<T>(func: ApiCall, [...args]: any[] = []): 
       const response = (await func(...args)) || {};
       if (response.ok) res(response.data);
       if (response?.originalError?.message === 'CONNECTION_TIMEOUT') {
-        Toastify.error('Connection timeout. Please check your network and try again.');
+        console.log('Connection timeout. Please check your network and try again.');
       }
       rej(response.data);
     } catch (err) {
