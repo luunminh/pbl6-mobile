@@ -7,6 +7,7 @@ export enum ApiKey {
   ADD_STAFF = '/admin/cashiers',
   AUTH = '/auth',
   CATEGORY = 'admin/category',
+  FILES = '/files',
 }
 
 export type QueryOptions<T> = Omit<UseQueryOptions, 'QueryKey'> & { QueryKey: T };

@@ -27,6 +27,7 @@ import { LoadingContainer } from 'src/containers/StartupContainers';
 import { setAuthenticated, setCurrentRole, setProfile } from '@redux/auth/authSlice';
 import { connect, useDispatch } from 'react-redux';
 import { IRootState } from '@redux/store';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useToastify } from '@shared/hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.SIGN_IN> &

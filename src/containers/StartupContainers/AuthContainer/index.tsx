@@ -20,7 +20,7 @@ const AuthContainer: React.FC<Props> = ({
       dispatch(setProfile(profile));
       dispatch(setAuthenticated(true));
       dispatch(
-        onSetCurrentRole(profile.userRoles.find((role) => role.roleId === UserRole.USER).roleId),
+        onSetCurrentRole(profile.userRoles.find((role) => role.roleId === UserRole.USER)?.roleId),
       );
     },
     onErrorCallback: (error) => {

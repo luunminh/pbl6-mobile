@@ -11,29 +11,98 @@ import ResetPassword from './UAM/ResetPassword';
 import { IRootState } from '@redux/store';
 import { connect } from 'react-redux';
 import Home from './Home';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import Product from './Product';
+import Cart from './Cart';
+import Profile from './Profile';
+import EditProfile from './Profile/EditProfile';
+import ProfileRouting from './Profile/ProfileRouting';
 
-type ContainerProps = ReturnType<typeof mapStateToProps>;
+const Tab = createBottomTabNavigator();
 
-const mapStateToProps = (state: IRootState) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+const tabBarScreenOptions = {
+  tabBarShowLabel: false,
+  headerShown: false,
+  tabBarStyle: {
+    height: 80,
+    backgroundColor: ColorCode.WHITE,
+  },
+};
+
+const getNavigationButton = (icon: React.ReactNode, title: string, focused: boolean) => (
+  <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+    {icon}
+    <Text color={getColor(focused)}>{title}</Text>
+  </View>
+);
+
+const getColor = (isFocus: boolean) => (isFocus ? ColorCode.PRIMARY : ColorCode.GREY_300);
+
 const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
   const Stack = createNativeStackNavigator();
   return (
     <>
       <NavigationContainer>
         {!!isAuthenticated ? (
-          <Stack.Navigator>
-            <Stack.Screen
+          <Tab.Navigator screenOptions={tabBarScreenOptions}>
+            <Tab.Screen
               options={{
                 headerShown: false,
+                tabBarIcon: ({ focused }) =>
+                  getNavigationButton(
+                    <AntDesign name="home" size={24} color={getColor(focused)} />,
+                    'Home',
+                    focused,
+                  ),
               }}
               name={Paths.HOME}
               component={Home}
             />
-          </Stack.Navigator>
+            <Tab.Screen
+              options={{
+                headerShown: false,
+                tabBarIcon: ({ focused }) =>
+                  getNavigationButton(
+                    <Feather name="shopping-bag" size={24} color={getColor(focused)} />,
+                    'Product',
+                    focused,
+                  ),
+              }}
+              name={Paths.PRODUCT}
+              component={Product}
+            />
+            <Tab.Screen
+              options={{
+                headerShown: false,
+                tabBarIcon: ({ focused }) =>
+                  getNavigationButton(
+                    <Feather name="shopping-cart" size={24} color={getColor(focused)} />,
+                    'Cart',
+                    focused,
+                  ),
+              }}
+              name={Paths.CART}
+              component={Cart}
+            />
+            <Tab.Screen
+              options={{
+                headerShown: false,
+                tabBarIcon: ({ focused }) =>
+                  getNavigationButton(
+                    <Feather name="user" size={24} color={getColor(focused)} />,
+                    'Profile',
+                    focused,
+                  ),
+              }}
+              name={Paths.PROFILE_ROUTING}
+              component={ProfileRouting}
+            />
+          </Tab.Navigator>
         ) : (
           <Stack.Navigator
+            initialRouteName={Paths.SIGN_IN}
             screenOptions={{
               headerStyle: { backgroundColor: ColorCode.WHITE },
               title: '',
@@ -76,5 +145,11 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
     </>
   );
 };
+
+type ContainerProps = ReturnType<typeof mapStateToProps>;
+
+const mapStateToProps = (state: IRootState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
 export default connect(mapStateToProps, undefined)(AppContainer);

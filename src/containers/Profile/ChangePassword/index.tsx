@@ -1,42 +1,26 @@
-import { IMAGES } from '@appConfig/images';
-import {
-  Center,
-  Image,
-  Input,
-  Icon,
-  Text,
-  VStack,
-  Pressable,
-  Button,
-  Link,
-  Stack,
-  useToast,
-  Box,
-  FormControl,
-} from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { useFormik } from 'formik';
-
-import { ChangePasswordPayload, useResetPassword } from '@queries';
-import { isEmpty } from '@shared';
+import { Paths, RootStackParamList } from '@appConfig/paths';
+import { ChangePasswordPayload, useChangePassword } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@appConfig/paths';
-import { Paths } from '@appConfig/paths';
+import { isEmpty } from '@shared';
+import { useToastify } from '@shared/hooks';
+import { Button, FormControl, Icon, Input, Pressable, Stack, Text } from 'native-base';
+import { useState } from 'react';
 import {
   ChangePasswordFormField,
   ChangePasswordFormType,
   changePasswordSchema,
   initialChangePasswordFormValue,
-} from './helpers';
-import { useToastify } from '@shared/hooks';
+} from './helpter';
+import { useFormik } from 'formik';
+import { MaterialIcons } from '@expo/vector-icons';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.RESET_PASS>;
-const ResetPassword = ({ navigation, route }: Props) => {
+type Props = NativeStackScreenProps<RootStackParamList, Paths.CHANGE_PASS>;
+
+const ChangePassword = ({ navigation, route }: Props) => {
   const [show, setShow] = useState(false);
   const { showError, showSuccess } = useToastify();
 
-  const { resetPassword, isLoading, isSuccess } = useResetPassword({
+  const { changePassword, isLoading, isSuccess } = useChangePassword({
     onSuccess: () => {
       showSuccess('Updated successfully!');
     },
@@ -44,7 +28,7 @@ const ResetPassword = ({ navigation, route }: Props) => {
   });
 
   const onChangePassword = (payload: ChangePasswordPayload) => {
-    resetPassword(payload);
+    changePassword(payload);
   };
 
   const { errors, touched, getFieldProps, handleSubmit, handleChange } =
@@ -104,4 +88,4 @@ const ResetPassword = ({ navigation, route }: Props) => {
   );
 };
 
-export default ResetPassword;
+export default ChangePassword;

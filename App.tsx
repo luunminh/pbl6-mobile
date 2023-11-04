@@ -35,6 +35,7 @@ const queryClient = new QueryClient({
         //   });
         // }
         // ErrorService.handler(err);
+        console.log(err.message);
         return err;
       },
     },

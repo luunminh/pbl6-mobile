@@ -1,9 +1,8 @@
-import { IMAGES } from '@appConfig/images';
 import { Input, Icon, Text, Button, Stack, useToast, FormControl } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFormik } from 'formik';
 
-import { useForgotPassword, useLogin } from '@queries';
+import { useForgotPassword } from '@queries';
 import { isEmpty } from '@shared';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@appConfig/paths';
