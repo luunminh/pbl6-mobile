@@ -20,7 +20,7 @@ export enum ColorCode {
   PRIMARY_400 = '#74B8F0',
   PRIMARY_300 = '#D6ECFF',
   PRIMARY_200 = '#E9F5FF',
-  PRIMARY_100 = '#E9E9E9',
+  PRIMARY_100 = '#F2F9FF',
 
   GREY_50 = '#F8F8F9',
   GREY_100 = '#EDEFF1',

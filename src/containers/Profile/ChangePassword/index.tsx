@@ -1,18 +1,20 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
+import { MaterialIcons } from '@expo/vector-icons';
 import { ChangePasswordPayload, useChangePassword } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { isEmpty } from '@shared';
+import { setAuthenticated } from '@redux/auth/authSlice';
+import { AuthService, isEmpty } from '@shared';
 import { useToastify } from '@shared/hooks';
+import { useFormik } from 'formik';
 import { Button, FormControl, Icon, Input, Pressable, Stack, Text } from 'native-base';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   ChangePasswordFormField,
   ChangePasswordFormType,
   changePasswordSchema,
   initialChangePasswordFormValue,
 } from './helpter';
-import { useFormik } from 'formik';
-import { MaterialIcons } from '@expo/vector-icons';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CHANGE_PASS>;
 
@@ -20,9 +22,15 @@ const ChangePassword = ({ navigation, route }: Props) => {
   const [show, setShow] = useState(false);
   const { showError, showSuccess } = useToastify();
 
+  const dispatch = useDispatch();
+
   const { changePassword, isLoading, isSuccess } = useChangePassword({
     onSuccess: () => {
-      showSuccess('Updated successfully!');
+      async () => {
+        showSuccess('Updated successfully!');
+        dispatch(setAuthenticated(false));
+        await AuthService.clearToken();
+      };
     },
     onError: (error) => showError(error.message),
   });

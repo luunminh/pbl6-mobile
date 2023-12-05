@@ -1,24 +1,22 @@
-import { Text, View, Container } from 'native-base';
-import { AuthContainer, SplashScreen } from './StartupContainers';
-import { SignIn } from './UAM';
+import { Paths } from '@appConfig/paths';
+import { ColorCode } from '@appConfig/theme';
+import { AntDesign, Feather } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Paths } from '@appConfig/paths';
-import SignUp from './UAM/SignUp';
-import { ColorCode } from '@appConfig/theme';
+import { IRootState } from '@redux/store';
+import { Text, View } from 'native-base';
+import { connect } from 'react-redux';
+import CartRouting from './Cart/CartRouting';
+import Home from './Home';
+import HomeRouting from './Home/HomeRouting';
+import Order from './Order';
+import ProfileRouting from './Profile/ProfileRouting';
+import { AuthContainer } from './StartupContainers';
+import { SignIn } from './UAM';
 import ForgotPassword from './UAM/ForgotPassword';
 import ResetPassword from './UAM/ResetPassword';
-import { IRootState } from '@redux/store';
-import { connect } from 'react-redux';
-import Home from './Home';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import Product from './Product';
-import Cart from './Cart';
-import Profile from './Profile';
-import EditProfile from './Profile/EditProfile';
-import ProfileRouting from './Profile/ProfileRouting';
+import SignUp from './UAM/SignUp';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,8 +55,8 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
                     focused,
                   ),
               }}
-              name={Paths.HOME}
-              component={Home}
+              name={Paths.HOME_ROUTING}
+              component={HomeRouting}
             />
             <Tab.Screen
               options={{
@@ -66,12 +64,12 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
                 tabBarIcon: ({ focused }) =>
                   getNavigationButton(
                     <Feather name="shopping-bag" size={24} color={getColor(focused)} />,
-                    'Product',
+                    'Oder',
                     focused,
                   ),
               }}
-              name={Paths.PRODUCT}
-              component={Product}
+              name={Paths.ORDER}
+              component={Order}
             />
             <Tab.Screen
               options={{
@@ -84,7 +82,7 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
                   ),
               }}
               name={Paths.CART}
-              component={Cart}
+              component={CartRouting}
             />
             <Tab.Screen
               options={{
@@ -110,6 +108,13 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
               headerShadowVisible: false,
             }}
           >
+            <Stack.Screen
+              options={{
+                headerShown: false,
+              }}
+              name={Paths.HOME}
+              component={Home}
+            />
             <Stack.Screen
               options={{
                 headerShown: false,

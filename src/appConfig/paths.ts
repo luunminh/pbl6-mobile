@@ -6,8 +6,21 @@ export enum Paths {
   NAVBAR = 'NAVBAR',
 
   HOME = 'home',
+  HOME_ROUTING = 'homeRouting',
+
+  SEARCH = 'search',
+  CHOOSE_STORE = 'chooseStore',
+
   PRODUCT = 'product',
+  PRODUCT_DETAIL = 'productDetail',
+
+  CATEGORY_ROUTING = 'categoryRouting',
+  CATEGORY = 'category',
+
   CART = 'cart',
+  CHECKOUT = 'checkout',
+
+  ORDER = 'order',
 
   PROFILE_ROUTING = 'profileRouting',
   PROFILE = 'profile',
@@ -23,8 +36,14 @@ export type RootStackParamList = {
   [Paths.FORGOT_PASS]: undefined;
   [Paths.RESET_PASS]: undefined;
   [Paths.HOME]: undefined;
-  [Paths.PRODUCT]: undefined;
+  [Paths.SEARCH]: undefined;
+  [Paths.CHOOSE_STORE]: undefined;
+  [Paths.ORDER]: undefined;
+  [Paths.PRODUCT]: { categoryId?: string; categoryName?: string; searchText?: string };
+  [Paths.PRODUCT_DETAIL]: { productId: string };
+  [Paths.CATEGORY]: undefined;
   [Paths.CART]: undefined;
+  [Paths.CHECKOUT]: undefined;
   [Paths.PROFILE]: undefined;
   [Paths.NAVBAR]: undefined;
   [Paths.EDIT_PROFILE]: undefined;

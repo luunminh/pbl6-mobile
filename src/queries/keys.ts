@@ -6,8 +6,11 @@ export enum ApiKey {
   _USERS_LIST = '/admin/users',
   ADD_STAFF = '/admin/cashiers',
   AUTH = '/auth',
-  CATEGORY = 'admin/category',
+  CATEGORY = 'category',
+  PRODUCT = 'product',
   FILES = '/files',
+  STORE = '/store',
+  CART = '/cart',
 }
 
 export type QueryOptions<T> = Omit<UseQueryOptions, 'QueryKey'> & { QueryKey: T };
