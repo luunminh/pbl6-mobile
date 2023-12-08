@@ -5,3 +5,4 @@ export * from './Store';
 export * from './Product';
 export * from './Cart';
 export * from './Voucher';
+export * from './Order';

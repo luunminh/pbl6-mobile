@@ -18,9 +18,11 @@ export enum Paths {
   CATEGORY = 'category',
 
   CART = 'cart',
+  CART_ROUTING = 'cartRouting',
   CHECKOUT = 'checkout',
 
   ORDER = 'order',
+  ORDER_ROUTING = 'orderRouting',
 
   PROFILE_ROUTING = 'profileRouting',
   PROFILE = 'profile',

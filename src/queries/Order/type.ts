@@ -67,7 +67,7 @@ export type GetOrdersResponse = {
   discountValue: number;
 };
 
-type OrderDetail = {
+export type OrderDetail = {
   id: string;
   quantity: number;
   orderPrice: string;

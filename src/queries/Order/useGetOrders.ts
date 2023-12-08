@@ -1,8 +1,7 @@
-import { PaginationResponseType, responseWrapper, Callback } from '@shared';
+import { PaginationResponseType, responseWrapper, Callback, TableParams } from '@shared';
 import { UseQueryOptions, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
-import { TableParams } from '@components';
 import { GetOrdersResponse, OrderApi } from '.';
 import { ApiKey } from '@queries/keys';
 
@@ -50,7 +49,7 @@ export function useGetOrders(
 
   const queryClient = useQueryClient();
 
-  const handleInvalidateOrders = () => queryClient.invalidateQueries([ApiKey.VOUCHER]);
+  const handleInvalidateOrders = () => queryClient.invalidateQueries([ApiKey.ORDER]);
 
   return {
     orders,

@@ -1,5 +1,6 @@
 import { startCase } from 'lodash';
 import dayjs from 'dayjs';
+import { isEmpty } from './validation';
 
 export const getFullName = ({ firstName = '', middleName = '', lastName = '' } = {}) =>
   `${firstName}${middleName ? ` ${middleName} ` : ' '}${lastName ? lastName : ''}`;
@@ -17,4 +18,17 @@ export const formatMoney = (value: number, defaultValue = '') => {
     currency: 'VND',
     maximumFractionDigits: 2,
   });
+};
+
+export const formatDate = (
+  value: string | number | Date | dayjs.Dayjs,
+  format = 'DD/MM/YYYY',
+  { initValueFormat = '' } = {},
+) => {
+  if (!value) return '';
+  if (!isEmpty(initValueFormat)) {
+    return dayjs(value, initValueFormat).format(format);
+  }
+
+  return dayjs(value).format(format);
 };

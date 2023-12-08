@@ -17,6 +17,7 @@ import { SignIn } from './UAM';
 import ForgotPassword from './UAM/ForgotPassword';
 import ResetPassword from './UAM/ResetPassword';
 import SignUp from './UAM/SignUp';
+import OrderRouting from './Order/OrderRouting';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,12 +65,12 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
                 tabBarIcon: ({ focused }) =>
                   getNavigationButton(
                     <Feather name="shopping-bag" size={24} color={getColor(focused)} />,
-                    'Oder',
+                    'Order',
                     focused,
                   ),
               }}
-              name={Paths.ORDER}
-              component={Order}
+              name={Paths.ORDER_ROUTING}
+              component={OrderRouting}
             />
             <Tab.Screen
               options={{
@@ -81,7 +82,7 @@ const AppContainer: React.FC<ContainerProps> = ({ isAuthenticated }) => {
                     focused,
                   ),
               }}
-              name={Paths.CART}
+              name={Paths.CART_ROUTING}
               component={CartRouting}
             />
             <Tab.Screen
