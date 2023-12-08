@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useToastify } from '@shared';
 import { FlatList, View } from 'native-base';
 import { useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { RefreshControl, TouchableOpacity } from 'react-native';
 import CategoryItem from './CategoryItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CATEGORY>;
@@ -13,9 +13,10 @@ type Props = NativeStackScreenProps<RootStackParamList, Paths.CATEGORY>;
 const Category = ({ navigation, route }: Props) => {
   const { showError } = useToastify();
 
-  const { categoryData, setParams, fetchNextPage } = useGetAllCategoryLazy({
-    onError: (error) => showError(error.message),
-  });
+  const { categoryData, setParams, fetchNextPage, handleInvalidateCategories, loading } =
+    useGetAllCategoryLazy({
+      onError: (error) => showError(error.message),
+    });
 
   useEffect(() => {
     setParams({});
@@ -43,6 +44,9 @@ const Category = ({ navigation, route }: Props) => {
         numColumns={2}
         onEndReached={handleEndReach}
         keyExtractor={(item) => item.id.toString()}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={handleInvalidateCategories} />
+        }
         renderItem={({ item }) => (
           <TouchableOpacity
             key={item.id}

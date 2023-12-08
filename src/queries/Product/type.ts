@@ -6,17 +6,18 @@ export interface CategoryResponse {
   description: string;
 }
 
-export type ProductResponse = {
+export interface ProductResponse {
   id: string;
   name: string;
   description: string;
   amount: number;
-  image: string;
   price: number;
   category: CategoryResponse;
   createdAt: string;
   updatedAt: string;
-};
+  image: string;
+  productStore?: ProductStore;
+}
 
 export type ProductStore = {
   id: string;

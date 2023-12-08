@@ -1,29 +1,47 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ProductResponse, useGetAllProductLazy } from '@queries/Product';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { isEmpty, useToastify } from '@shared';
+import { StoreService, isEmpty, useToastify } from '@shared';
 import { FlatList, Text, View } from 'native-base';
-import { useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import { RefreshControl, TouchableOpacity } from 'react-native';
 import ProductItem from './ProductItem';
+import { LoadingContainer } from '../StartupContainers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.PRODUCT>;
 
 const Product = ({ navigation, route }: Props) => {
-  const { showError } = useToastify();
-  const { categoryId, categoryName, searchText } = route.params;
+  const [storeId, setStoreId] = useState<string>(null);
 
-  const { productData, setParams, fetchNextPage, setInputSearch } = useGetAllProductLazy({
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      StoreService.getStoreId().then((value) => setStoreId(value));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const { showError } = useToastify();
+  const { categoryId, searchText } = route.params;
+
+  const {
+    productData,
+    setParams,
+    fetchNextPage,
+    setInputSearch,
+    loading,
+    handleInvalidateProducts,
+  } = useGetAllProductLazy({
     onError: (error) => showError(error.message),
   });
 
   useEffect(() => {
     setParams({
       ...(categoryId && { categories: categoryId }),
+      ...(storeId && { storeId: storeId }),
     });
     setInputSearch(searchText);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [storeId]);
 
   const handleEndReach = () => {
     fetchNextPage();
@@ -33,6 +51,10 @@ const Product = ({ navigation, route }: Props) => {
     navigation.navigate(Paths.PRODUCT_DETAIL, { productId: item.id });
   };
 
+  const productListData = storeId
+    ? productData.filter((product) => product?.productStore?.amount > 0, false)
+    : productData;
+
   return (
     <View
       style={{
@@ -40,12 +62,15 @@ const Product = ({ navigation, route }: Props) => {
         flex: 1,
       }}
     >
-      {!isEmpty(productData) ? (
+      {!isEmpty(productListData) ? (
         <FlatList
-          data={productData}
+          data={productListData}
           numColumns={2}
           onEndReached={handleEndReach}
           keyExtractor={(item) => item.id.toString()}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={handleInvalidateProducts} />
+          }
           renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
@@ -56,7 +81,7 @@ const Product = ({ navigation, route }: Props) => {
                 alignItems: 'center',
               }}
             >
-              <ProductItem product={item} navigation={navigation} route={route} />
+              <ProductItem storeId={storeId} product={item} navigation={navigation} route={route} />
             </TouchableOpacity>
           )}
         />

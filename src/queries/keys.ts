@@ -11,6 +11,8 @@ export enum ApiKey {
   FILES = '/files',
   STORE = '/store',
   CART = '/cart',
+  ORDER = '/order',
+  VOUCHER = '/voucher',
 }
 
 export type QueryOptions<T> = Omit<UseQueryOptions, 'QueryKey'> & { QueryKey: T };

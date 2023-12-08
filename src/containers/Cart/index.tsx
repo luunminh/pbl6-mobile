@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StoreService, isEmpty } from '@shared';
 import { FlatList, Text, View } from 'native-base';
 import { useEffect, useState } from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, RefreshControl } from 'react-native';
 import CartFooter from './CartFooter';
 import CartItem from './CartItem';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
@@ -22,7 +22,7 @@ const Cart = ({ navigation, route }: Props) => {
     return unsubscribe;
   }, [navigation]);
 
-  const { cart } = useGetCart({ storeId: storeId });
+  const { cart, handleInvalidateCart, isLoading } = useGetCart({ storeId: storeId });
 
   return (
     <View
@@ -39,6 +39,9 @@ const Cart = ({ navigation, route }: Props) => {
         <FlatList
           data={cart}
           keyExtractor={(item) => item.id.toString()}
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={handleInvalidateCart} />
+          }
           renderItem={({ item }) => <CartItem cart={item} navigation={navigation} route={route} />}
         />
       ) : (

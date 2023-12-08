@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StoreService, isEmpty, useToastify } from '@shared';
 import { FlatList, HStack, Icon, Input, Text, View } from 'native-base';
 import { useEffect, useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { RefreshControl, TouchableOpacity } from 'react-native';
 import StoreItem from './StoreItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CHOOSE_STORE>;
@@ -25,9 +25,10 @@ const ChooseStore = ({ navigation, route }: Props) => {
 
   const { showError } = useToastify();
 
-  const { storeData, setParams, fetchNextPage, setInputSearch } = useGetAllStoreLazy({
-    onError: (error) => showError(error.message),
-  });
+  const { storeData, setParams, fetchNextPage, setInputSearch, loading, handleInvalidateStores } =
+    useGetAllStoreLazy({
+      onError: (error) => showError(error.message),
+    });
 
   const { handleInvalidateCart } = useGetCart({ storeId: storeId });
 
@@ -87,6 +88,9 @@ const ChooseStore = ({ navigation, route }: Props) => {
           data={storeData}
           onEndReached={handleEndReach}
           keyExtractor={(item) => item.id.toString()}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={handleInvalidateStores} />
+          }
           renderItem={({ item }) => (
             <TouchableOpacity key={item.id} onPress={() => handlePress(item)}>
               <StoreItem store={item} />

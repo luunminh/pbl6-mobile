@@ -1,3 +1,4 @@
+import { SHIPPING_FEE } from '@appConfig/constants';
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
 import { Button } from '@components';
@@ -6,12 +7,15 @@ import { useGetCart } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StoreService, formatMoney, isEmpty } from '@shared';
 import { HStack, Icon, Text, VStack } from 'native-base';
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
+import { getDiscount } from '../OderSummary/helpers';
+import { VoucherContext } from 'src/context';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
+type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT>;
 
-const CartFooter = ({ navigation, route }: Props) => {
+const CheckOutFooter = ({ navigation, route }: Props) => {
+  const { selectedVoucher } = useContext(VoucherContext);
   const [storeId, setStoreId] = useState<string>(null);
 
   useEffect(() => {
@@ -32,14 +36,15 @@ const CartFooter = ({ navigation, route }: Props) => {
     [cart],
   );
 
-  const isCartContainOutOfStockProduct = cart?.some((product) => !product.inOfStock);
+  const total = useMemo(
+    () => subTotal + SHIPPING_FEE - getDiscount(selectedVoucher, subTotal),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedVoucher, subTotal],
+  );
 
   const handlePress = () => {
-    if (isCartContainOutOfStockProduct) {
-      Alert.alert('Warning', 'You have to remote Out of Stock product before checkout');
-      return;
-    }
-    navigation.navigate(Paths.CHECKOUT);
+    // navigation.navigate(Paths.CHECKOUT);
+    console.log('order');
   };
 
   return (
@@ -57,11 +62,13 @@ const CartFooter = ({ navigation, route }: Props) => {
         }}
       >
         <Text style={{ fontSize: 14, fontWeight: 'bold' }}>Total:</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{formatMoney(subTotal)}</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', color: ColorCode.PRIMARY }}>
+          {formatMoney(total)}
+        </Text>
       </HStack>
-      <Button handlePress={handlePress} disable={isEmpty(cart)} label="Checkout" />
+      <Button handlePress={handlePress} disable={isEmpty(cart)} label="Place Order" />
     </VStack>
   );
 };
 
-export default CartFooter;
+export default CheckOutFooter;

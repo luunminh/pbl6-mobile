@@ -26,7 +26,7 @@ const CartRouting = ({ navigation, route }: Props) => {
       <CartStack.Screen
         name={Paths.CHECKOUT}
         component={Checkout}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, title: 'Checkout' }}
       />
     </CartStack.Navigator>
   );

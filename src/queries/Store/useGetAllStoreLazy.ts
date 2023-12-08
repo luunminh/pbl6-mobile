@@ -1,4 +1,10 @@
-import { PaginationResponseType, TableParams, isEmpty, responseWrapper, useDebounce } from '@shared';
+import {
+  PaginationResponseType,
+  TableParams,
+  isEmpty,
+  responseWrapper,
+  useDebounce,
+} from '@shared';
 import { useMemo, useState } from 'react';
 import { UseInfiniteQueryOptions, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { StoreApi, StoreResponse } from '.';
@@ -58,7 +64,7 @@ export function useGetAllStoreLazy(
 
   const queryClient = useQueryClient();
 
-  const handleInvalidateCategories = () => queryClient.invalidateQueries([ApiKey.STORE]);
+  const handleInvalidateStores = () => queryClient.invalidateQueries([ApiKey.STORE]);
 
   return {
     data,
@@ -71,6 +77,6 @@ export function useGetAllStoreLazy(
     getStoreOptions,
     fetchNextPage,
     setParams,
-    handleInvalidateCategories,
+    handleInvalidateStores,
   };
 }

@@ -7,6 +7,7 @@ import AppContainer from './src/containers';
 import { useFonts } from 'expo-font';
 import createStore from './src/redux/store';
 import { Provider } from 'react-redux';
+import { VoucherContextProvider } from './src/context';
 
 const { store } = createStore();
 
@@ -52,7 +53,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <NativeBaseProvider theme={theme}>
-          <AppContainer />
+          <VoucherContextProvider>
+            <AppContainer />
+          </VoucherContextProvider>
         </NativeBaseProvider>
       </Provider>
     </QueryClientProvider>

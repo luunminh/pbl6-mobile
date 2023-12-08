@@ -48,7 +48,7 @@ export function useGetAllProductLazy(
         };
       },
       notifyOnChangeProps: ['data', 'isFetching'],
-      enabled: !isEmpty(params),
+      enabled: true,
       ...options,
     },
   );
@@ -65,7 +65,7 @@ export function useGetAllProductLazy(
 
   const queryClient = useQueryClient();
 
-  const handleInvalidateCategories = () => queryClient.invalidateQueries([ApiKey.PRODUCT]);
+  const handleInvalidateProducts = () => queryClient.invalidateQueries([ApiKey.PRODUCT]);
 
   return {
     data,
@@ -78,6 +78,6 @@ export function useGetAllProductLazy(
     getProductOptions,
     fetchNextPage,
     setParams,
-    handleInvalidateCategories,
+    handleInvalidateProducts,
   };
 }
