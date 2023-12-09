@@ -81,7 +81,7 @@ const Product = ({ navigation, route }: Props) => {
                 alignItems: 'center',
               }}
             >
-              <ProductItem storeId={storeId} product={item} navigation={navigation} route={route} />
+              <ProductItem storeId={storeId} product={item} />
             </TouchableOpacity>
           )}
         />

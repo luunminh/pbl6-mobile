@@ -39,9 +39,16 @@ const create = (baseURL = `${appConfig.API_URL}`) => {
 
   const getProductById = (params: { id: string }) => api.get(`/product/${params.id}`, {});
 
+  const getProductTopSale = (params: ProductListParams) => {
+    const { ...tableParams } = params;
+    const queryString = stringify(tableParams);
+    return api.get(`/product/top-sell`, {});
+  };
+
   return {
     getProductList,
     getProductById,
+    getProductTopSale,
   };
 };
 

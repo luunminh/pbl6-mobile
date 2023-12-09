@@ -6,9 +6,11 @@ import { Feather } from '@expo/vector-icons';
 import { CategoryListResponse, useGetAllCategoryLazy } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useToastify } from '@shared';
-import { Box, FlatList, Image, Text, View } from 'native-base';
+import { Box, FlatList, Image, ScrollView, Text } from 'native-base';
 import { useEffect } from 'react';
 import { ImageBackground, RefreshControl, TouchableOpacity } from 'react-native';
+import { LoadingContainer } from '../StartupContainers';
+import TopSale from './TopSale';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.HOME>;
 
 const Home = ({ navigation, route }: Props) => {
@@ -44,12 +46,12 @@ const Home = ({ navigation, route }: Props) => {
     name: 'More',
   });
 
+  if (loading) return <LoadingContainer />;
+
   return (
-    <View
+    <ScrollView
       style={{
-        width: '100%',
         backgroundColor: ColorCode.WHITE,
-        flex: 1,
       }}
     >
       <ImageBackground
@@ -118,7 +120,8 @@ const Home = ({ navigation, route }: Props) => {
           </TouchableOpacity>
         )}
       />
-    </View>
+      <TopSale navigation={navigation} route={route} />
+    </ScrollView>
   );
 };
 

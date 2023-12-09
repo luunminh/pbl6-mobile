@@ -19,6 +19,11 @@ export interface ProductResponse {
   productStore?: ProductStore;
 }
 
+export interface TopSaleResponse {
+  totalQuantitySold: number;
+  product: ProductResponse;
+}
+
 export type ProductStore = {
   id: string;
   productId: string;

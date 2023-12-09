@@ -10,9 +10,9 @@ import { TouchableOpacity } from 'react-native';
 import { VoucherContext } from 'src/context';
 import { getDiscount } from '../OderSummary/helpers';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT>;
+type Props = {};
 
-const ShippingOption = ({ navigation, route }: Props) => {
+const ShippingOption = ({}: Props) => {
   return (
     <VStack
       style={{

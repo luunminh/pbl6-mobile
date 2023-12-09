@@ -3,7 +3,7 @@ import { Chip } from '@components';
 import { OrderStatus } from '@queries';
 
 export const renderOrderCardStatus = (status) => {
-  switch (status.toString()) {
+  switch (String(status)) {
     case OrderStatus.CONFIRMED:
       return <Chip title="Confirmed" color={ColorCode.SUCCESS} bgColor={ColorCode.SUCCESS_BG} />;
     case OrderStatus.PENDING_CONFIRM:

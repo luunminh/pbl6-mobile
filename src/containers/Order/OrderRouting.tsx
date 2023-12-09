@@ -5,6 +5,7 @@ import Cart from '.';
 import ChooseStore from 'src/containers/ChooseStore';
 import Checkout from '../Checkout';
 import Order from '.';
+import OrderDetail from '../OrderDetail';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.ORDER>;
 
@@ -22,6 +23,11 @@ const OrderRouting = ({ navigation, route }: Props) => {
         name={Paths.ORDER}
         component={Order}
         options={{ headerShown: true, title: 'My Order' }}
+      />
+      <OrderStack.Screen
+        name={Paths.ORDER_DETAIL}
+        component={OrderDetail}
+        options={{ headerShown: true, title: 'Order Detail' }}
       />
     </OrderStack.Navigator>
   );

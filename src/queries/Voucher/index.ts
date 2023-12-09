@@ -4,4 +4,5 @@ export const VoucherApi = voucherApi.create();
 
 export * from './useGetAllVouchers';
 export * from './useGetVoucherDetail';
+export * from './useGetAllVouchersLazy';
 export * from './type';

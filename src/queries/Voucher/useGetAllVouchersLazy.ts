@@ -7,18 +7,17 @@ import {
 } from '@shared';
 import { useMemo, useState } from 'react';
 import { UseInfiniteQueryOptions, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-
 import { ApiKey } from '@queries/keys';
-import { GetOrdersResponse } from './type';
-import { OrderApi } from '.';
+import { VoucherResponse } from './type';
+import { VoucherApi } from '.';
 
 const search = {
   take: 10,
   skip: 0,
 };
 
-export function useGetOrdersLazy(
-  options?: UseInfiniteQueryOptions<PaginationResponseType<GetOrdersResponse>, Error>,
+export function useGetAllVouchersLazy(
+  options?: UseInfiniteQueryOptions<PaginationResponseType<VoucherResponse>, Error>,
 ) {
   const [inputSearch, setInputSearch] = useState<string>('');
   const [params, setParams] = useState<TableParams>(null);
@@ -28,14 +27,14 @@ export function useGetOrdersLazy(
     error,
     isError,
     isFetching,
-    refetch: getOrderOptions,
+    refetch: getCategoryOptions,
     fetchNextPage,
-  } = useInfiniteQuery<PaginationResponseType<GetOrdersResponse>, Error>(
-    [ApiKey.ORDER, 'options', debounceSearch, { type: 'lazy' }],
-    (props): Promise<PaginationResponseType<GetOrdersResponse>> => {
+  } = useInfiniteQuery<PaginationResponseType<VoucherResponse>, Error>(
+    [ApiKey.VOUCHER, 'options', debounceSearch, { type: 'lazy' }],
+    (props): Promise<PaginationResponseType<VoucherResponse>> => {
       const { pageParam = search } = props;
 
-      return responseWrapper<PaginationResponseType<GetOrdersResponse>>(OrderApi.getOrders, [
+      return responseWrapper<PaginationResponseType<VoucherResponse>>(VoucherApi.getVoucherList, [
         { ...pageParam, ...params, search: inputSearch },
       ]);
     },
@@ -54,7 +53,7 @@ export function useGetOrdersLazy(
     },
   );
 
-  const orderData: GetOrdersResponse[] = useMemo(() => {
+  const voucherData: VoucherResponse[] = useMemo(() => {
     if (isEmpty(data?.pages)) return [];
     return data.pages.reduce((state, page, _pageIdx) => [...state, ...page.data], []);
   }, [data]);
@@ -66,19 +65,19 @@ export function useGetOrdersLazy(
 
   const queryClient = useQueryClient();
 
-  const handleInvalidateOrders = () => queryClient.invalidateQueries([ApiKey.ORDER]);
+  const handleInvalidateVouchers = () => queryClient.invalidateQueries([ApiKey.VOUCHER]);
 
   return {
     data,
-    orderData,
     error,
     hasNext,
     isError,
+    voucherData,
     loading: isFetching,
     setInputSearch,
-    getOrderOptions,
+    getCategoryOptions,
     fetchNextPage,
     setParams,
-    handleInvalidateOrders,
+    handleInvalidateVouchers,
   };
 }

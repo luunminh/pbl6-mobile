@@ -1,22 +1,20 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { Button } from '@components';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useGetProfile } from '@queries';
+import { ContactType, useGetProfile } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useToastify } from '@shared';
 import { HStack, Icon, Text, VStack } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT>;
+type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT> & {
+  contact: ContactType;
+};
 
-const GeneralInformation = ({ navigation, route }: Props) => {
-  const { showError, showSuccess } = useToastify();
-
-  const { profile } = useGetProfile({
-    onErrorCallback: (error) => showError(error?.message),
-  });
-
-  const handleChange = () => {};
+const GeneralInformation = ({ navigation, route, contact }: Props) => {
+  const handleChange = () => {
+    navigation.navigate(Paths.EDIT_DELIVERY, { contact: contact });
+  };
 
   return (
     <VStack
@@ -39,10 +37,10 @@ const GeneralInformation = ({ navigation, route }: Props) => {
         </TouchableOpacity>
       </HStack>
       <Text fontSize={14} paddingLeft={6}>
-        {profile?.firstName} {profile?.lastName} - {profile?.phone}
+        {contact?.firstName} {contact?.lastName} - {contact?.phoneNumber}
       </Text>
       <Text fontSize={14} paddingLeft={6}>
-        {profile?.address}
+        {contact?.address}
       </Text>
     </VStack>
   );

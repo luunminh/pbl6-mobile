@@ -13,6 +13,7 @@ export enum ApiKey {
   CART = '/cart',
   ORDER = '/order',
   VOUCHER = '/voucher',
+  TOP_SALE = '/topSale',
 }
 
 export type QueryOptions<T> = Omit<UseQueryOptions, 'QueryKey'> & { QueryKey: T };

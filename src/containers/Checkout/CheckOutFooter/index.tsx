@@ -5,16 +5,18 @@ import { Button } from '@components';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useGetCart } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StoreService, formatMoney, isEmpty } from '@shared';
+import { Callback, StoreService, formatMoney, isEmpty } from '@shared';
 import { HStack, Icon, Text, VStack } from 'native-base';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 import { getDiscount } from '../OderSummary/helpers';
 import { VoucherContext } from 'src/context';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT>;
+type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT> & {
+  handleOrder: Callback;
+};
 
-const CheckOutFooter = ({ navigation, route }: Props) => {
+const CheckOutFooter = ({ navigation, route, handleOrder }: Props) => {
   const { selectedVoucher } = useContext(VoucherContext);
   const [storeId, setStoreId] = useState<string>(null);
 
@@ -43,8 +45,7 @@ const CheckOutFooter = ({ navigation, route }: Props) => {
   );
 
   const handlePress = () => {
-    // navigation.navigate(Paths.CHECKOUT);
-    console.log('order');
+    handleOrder();
   };
 
   return (

@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font';
 import createStore from './src/redux/store';
 import { Provider } from 'react-redux';
 import { VoucherContextProvider } from './src/context';
-
+import { LogBox } from 'react-native';
 const { store } = createStore();
 
 const queryClient = new QueryClient({
@@ -48,6 +48,8 @@ export default function App() {
     Mulish: require('./src/assets/fonts/Mulish-VariableFont_wght.ttf'),
     'Public Sans': require('./src/assets/fonts/PublicSans-VariableFont_wght.ttf'),
   });
+
+  LogBox.ignoreAllLogs();
 
   return (
     <QueryClientProvider client={queryClient}>

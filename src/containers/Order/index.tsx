@@ -7,24 +7,28 @@ import { FlatList, View, Text } from 'native-base';
 import { useEffect } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import OrderItem from './OrderItem';
+import { LoadingContainer } from '../StartupContainers';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
 const Order = ({ navigation, route }: Props) => {
   const { showError, showSuccess } = useToastify();
 
-  const { orderData, loading, setParams, fetchNextPage, setInputSearch, handleInvalidateOrders } =
-    useGetOrdersLazy({
+  const { orderData, loading, setParams, fetchNextPage, handleInvalidateOrders } = useGetOrdersLazy(
+    {
       onError(error) {
         showError(error?.message);
       },
-    });
+    },
+  );
 
   useEffect(() => {
-    setParams({});
+    setParams({ order: 'createdAt:desc' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handlePress = (item: GetOrdersResponse) => {};
+  const handlePress = (item: GetOrdersResponse) => {
+    navigation.navigate(Paths.ORDER_DETAIL, { orderId: item.id });
+  };
 
   const handleEndReach = () => {
     fetchNextPage();

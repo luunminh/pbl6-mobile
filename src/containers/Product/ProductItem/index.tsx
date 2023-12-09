@@ -16,12 +16,12 @@ import { Box, Image, Text } from 'native-base';
 import { useEffect, useMemo, useState } from 'react';
 import { QuantityOptions } from 'src/containers/Cart/CartItem/helpers';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.PRODUCT> & {
+type Props = {
   product: ProductResponse;
   storeId: string;
 };
 
-const ProductItem = ({ product, navigation, storeId }: Props) => {
+const ProductItem = ({ product, storeId }: Props) => {
   const { showError, showSuccess } = useToastify();
 
   const { cart } = useGetCart({ storeId: storeId });
