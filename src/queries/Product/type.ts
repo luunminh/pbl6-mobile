@@ -19,9 +19,13 @@ export interface ProductResponse {
   productStore?: ProductStore;
 }
 
+export type ProductTopSale = Omit<ProductResponse, 'productStore'> & {
+  amountOfProductStore: number;
+};
+
 export interface TopSaleResponse {
   totalQuantitySold: number;
-  product: ProductResponse;
+  product: ProductTopSale;
 }
 
 export type ProductStore = {

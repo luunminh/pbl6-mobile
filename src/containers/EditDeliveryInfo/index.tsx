@@ -1,22 +1,30 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ContactType, UpdateProfilePayload } from '@queries';
+import { ContactType } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { isEmpty } from '@shared';
+import { DeliveryInfoService, isEmpty } from '@shared';
 import { useToastify } from '@shared/hooks';
 import { useFormik } from 'formik';
-import { Button, FormControl, Icon, Input, Text, VStack } from 'native-base';
+import { Button, FormControl, Icon, Input, VStack } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { DeliveryFormField, deliverySchema, initialDeliveryFormValue } from './helpers';
+import { DeliveryFormField, deliverySchema } from './helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.EDIT_DELIVERY>;
 
 const EditDeliveryInfo = ({ navigation, route }: Props) => {
   const { contact } = route.params;
-  const { showError, showSuccess } = useToastify();
+  const { showError } = useToastify();
 
-  const handleUpdateProfile = (formValue: ContactType) => {
-    console.log('formValue', formValue);
+  const handleUpdateProfile = async (formValue: ContactType) => {
+    try {
+      await DeliveryInfoService.setAddress(formValue.address);
+      await DeliveryInfoService.setFirstName(formValue.firstName);
+      await DeliveryInfoService.setLastName(formValue.lastName);
+      await DeliveryInfoService.setPhone(formValue.phoneNumber);
+      navigation.goBack();
+    } catch (error) {
+      showError(error);
+    }
   };
 
   const { errors, touched, getFieldProps, handleSubmit, handleChange, setFieldValue } =
@@ -49,7 +57,7 @@ const EditDeliveryInfo = ({ navigation, route }: Props) => {
                     />
                   }
                   placeholder="First name"
-                  onChangeText={handleChange('firstName')}
+                  onChangeText={(text: string) => setFieldValue(DeliveryFormField.FIRST_NAME, text)}
                   {...getFieldProps(DeliveryFormField.FIRST_NAME)}
                 />
                 <FormControl.ErrorMessage>{errors.firstName}</FormControl.ErrorMessage>
@@ -70,7 +78,7 @@ const EditDeliveryInfo = ({ navigation, route }: Props) => {
                     />
                   }
                   placeholder="Last name"
-                  onChangeText={handleChange('lastName')}
+                  onChangeText={(text: string) => setFieldValue(DeliveryFormField.LAST_NAME, text)}
                   {...getFieldProps(DeliveryFormField.LAST_NAME)}
                 />
                 <FormControl.ErrorMessage>{errors.lastName}</FormControl.ErrorMessage>
@@ -83,7 +91,7 @@ const EditDeliveryInfo = ({ navigation, route }: Props) => {
                   <Icon as={<MaterialIcons name="phone" />} size={5} ml="2" color="primary.500" />
                 }
                 placeholder="phone"
-                onChangeText={handleChange('phone')}
+                onChangeText={(text: string) => setFieldValue(DeliveryFormField.PHONE, text)}
                 {...getFieldProps(DeliveryFormField.PHONE)}
               />
               <FormControl.ErrorMessage>{errors.phoneNumber}</FormControl.ErrorMessage>
@@ -94,7 +102,7 @@ const EditDeliveryInfo = ({ navigation, route }: Props) => {
                 multiline
                 numberOfLines={3}
                 placeholder="Address"
-                onChangeText={handleChange('address')}
+                onChangeText={(text: string) => setFieldValue(DeliveryFormField.ADDRESS, text)}
                 {...getFieldProps(DeliveryFormField.ADDRESS)}
               />
               <FormControl.ErrorMessage>{errors.address}</FormControl.ErrorMessage>

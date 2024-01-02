@@ -39,7 +39,11 @@ const create = (baseURL = `${appConfig.API_URL}`) => {
   };
 
   const createOrder = (payload: CreateOrderPayload) => {
-    return api.post(`${ApiKey.ORDER}`, payload);
+    return api.post(`${ApiKey.ORDER}`, payload, {
+      headers: {
+        Origin: 'https://malt-convenience-store-customer.vercel.app',
+      },
+    });
   };
 
   const getOrderDetail = (id: string) => {

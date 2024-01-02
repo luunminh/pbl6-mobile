@@ -109,7 +109,7 @@ const Home = ({ navigation, route }: Props) => {
           >
             <Box style={{ alignItems: 'center' }}>
               <Image
-                source={item.image ? { uri: item.image } : IMAGES.category}
+                source={item.image ? { uri: item.image } : IMAGES.more}
                 alt={item.name}
                 size="xs"
               />

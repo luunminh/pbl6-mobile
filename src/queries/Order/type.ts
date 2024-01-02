@@ -1,20 +1,30 @@
 export enum OrderStatus {
   PENDING_CONFIRM = '1',
   CONFIRMED = '2',
+  COMPLETED = '3',
+  PENDING_PAYMENT = '4',
+  PAYMENT_CONFIRMED = '5',
   CANCELED = '6',
-  // COMPLETED = 3,
-  // PENDING_PAYMENT = 4,
-  // PAYMENT_CONFIRMED = 5,
 }
+
+export const OrderStatusTitle = {
+  all: 'All',
+  [OrderStatus.PENDING_CONFIRM]: 'Pending',
+  [OrderStatus.CONFIRMED]: 'Confirmed',
+  [OrderStatus.COMPLETED]: 'Completed',
+  [OrderStatus.PENDING_PAYMENT]: 'Pending payment',
+  [OrderStatus.PAYMENT_CONFIRMED]: 'Paid',
+  [OrderStatus.CANCELED]: 'Cancelled',
+};
 
 export enum PaymentMethod {
   COD = 'COD',
-  MOMO = 'MOMO',
+  BANKING = 'BANKING',
 }
 
 export const PaymentMethodTitle = {
   [PaymentMethod.COD]: 'Cash on Delivery (COD)',
-  [PaymentMethod.MOMO]: 'Momo',
+  [PaymentMethod.BANKING]: 'VNPay E-Wallet',
 };
 
 export const RequestStatusTitle = {
@@ -50,6 +60,40 @@ export interface CreateOrderPayload {
   paymentMethod: string;
 }
 
+type MetadataType = {
+  Information: {
+    address: string;
+    lastName: string;
+    firstName: string;
+    phoneNumber: string;
+  };
+};
+
+export type CreateOrderResponse = {
+  id: string;
+  total: number;
+  shipping: number;
+  address: string;
+  createdBy: string;
+  cancelExpiredAt: string;
+  orderStatusId: number;
+  paymentMethod: string;
+  voucherId: string;
+  metadata: MetadataType;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  paymentUrl?: string;
+};
+
+export type ConfirmPaymentPayload = {
+  amount: number;
+  bankCode: string;
+  transactionNumber: string;
+  cardType: string;
+  orderInfo: string;
+};
+
 // ******************** ORDER LIST ********************
 
 export type GetOrdersResponse = {
@@ -59,6 +103,7 @@ export type GetOrdersResponse = {
   user: User;
   voucher?: Voucher;
   orderStatusId: number | string;
+  paymentUrl: string;
   paymentMethod: string;
   orderDetails: OrderDetail[];
   metadata: OrderMetaData;

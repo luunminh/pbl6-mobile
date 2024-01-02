@@ -27,5 +27,5 @@ export const deliverySchema = yup.object().shape({
     .matches(phoneRegExp, ERROR_MESSAGES.INVALID_DATA)
     .min(10)
     .max(11),
-  [ProfileFormField.ADDRESS]: yup.string().nullable().max(50),
+  [ProfileFormField.ADDRESS]: yup.string().nullable().max(100),
 });

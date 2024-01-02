@@ -1,13 +1,12 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
-import { GetOrdersResponse, useGetOrders } from '@queries/Order';
+import { GetOrdersResponse } from '@queries/Order';
 import { useGetOrdersLazy } from '@queries/Order/useGetOrdersLazy';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { isEmpty, useToastify } from '@shared';
-import { FlatList, View, Text } from 'native-base';
+import { FlatList, Text, View } from 'native-base';
 import { useEffect } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import OrderItem from './OrderItem';
-import { LoadingContainer } from '../StartupContainers';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
 const Order = ({ navigation, route }: Props) => {

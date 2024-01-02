@@ -30,6 +30,7 @@ export enum Paths {
   ORDER_SUCCESS = 'orderSuccess',
 
   CHOOSE_VOUCHER = 'chooseVoucher',
+  CHOOSE_PAYMENT = 'choosePayment',
 
   PROFILE_ROUTING = 'profileRouting',
   PROFILE = 'profile',
@@ -56,6 +57,7 @@ export type RootStackParamList = {
   [Paths.CART]: undefined;
   [Paths.CHECKOUT]: undefined;
   [Paths.CHOOSE_VOUCHER]: { subTotal: number };
+  [Paths.CHOOSE_PAYMENT]: undefined;
   [Paths.EDIT_DELIVERY]: { contact: ContactType };
   [Paths.PROFILE]: undefined;
   [Paths.NAVBAR]: undefined;

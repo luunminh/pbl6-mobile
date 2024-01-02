@@ -47,6 +47,6 @@ export const ProfileFormSchema = yup.object().shape({
     .matches(phoneRegExp, ERROR_MESSAGES.INVALID_DATA)
     .min(10)
     .max(11),
-  [ProfileFormField.ADDRESS]: yup.string().nullable().max(50),
+  [ProfileFormField.ADDRESS]: yup.string().nullable().max(500),
   [ProfileFormField.AVATAR]: yup.string().nullable(),
 });

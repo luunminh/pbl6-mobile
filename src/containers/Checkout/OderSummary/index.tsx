@@ -1,49 +1,28 @@
 import { SHIPPING_FEE } from '@appConfig/constants';
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { MaterialIcons } from '@expo/vector-icons';
-import { VoucherResponse, VoucherType, useGetCart } from '@queries';
+import { Cart } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StoreService, formatMoney, isEmpty } from '@shared';
+import { formatMoney } from '@shared';
 import { Divider, HStack, Icon, Text, VStack } from 'native-base';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { FlatList, RefreshControl, TouchableOpacity } from 'react-native';
+import { useContext } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { VoucherContext } from 'src/context';
 import OrderItem from './OrderItem';
 import { getDiscount } from './helpers';
 
-type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT>;
+type Props = NativeStackScreenProps<RootStackParamList, Paths.CHECKOUT> & {
+  cart?: Cart[];
+  subTotal?: number;
+  total?: number;
+};
 
-const OderSummary = ({ navigation, route }: Props) => {
-  const [storeId, setStoreId] = useState<string>(null);
-  const { selectedVoucher, setSelectedVoucherId } = useContext(VoucherContext);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      StoreService.getStoreId().then((value) => setStoreId(value));
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  const { cart, handleInvalidateCart, isLoading } = useGetCart({ storeId: storeId });
+const OderSummary = ({ navigation, cart, subTotal, total }: Props) => {
+  const { selectedVoucher } = useContext(VoucherContext);
 
   const handleBackToCart = () => {
     navigation.goBack();
   };
-
-  const subTotal = useMemo(
-    () =>
-      cart
-        ?.filter((product) => product.inOfStock)
-        .reduce((total, curProduct) => total + curProduct.price, 0),
-    [cart],
-  );
-
-  const total = useMemo(
-    () => subTotal + SHIPPING_FEE - getDiscount(selectedVoucher, subTotal),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedVoucher, subTotal],
-  );
 
   return (
     <VStack

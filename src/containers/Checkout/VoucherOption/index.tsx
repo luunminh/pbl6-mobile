@@ -2,6 +2,7 @@ import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { DeliveryInfoService, useToastify } from '@shared';
 import { HStack, Icon, Text, VStack } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 
@@ -18,8 +19,19 @@ const VoucherOption = <T extends keyof RootStackParamList>({
   voucherCode,
   subTotal,
 }: Props<T>) => {
+  const { showError, showSuccess } = useToastify();
+
   const handleChange = () => {
     navigation.navigate(Paths.CHOOSE_VOUCHER, { subTotal: subTotal });
+  };
+
+  const handleRemoveVoucher = async () => {
+    try {
+      await DeliveryInfoService.setPayment(null);
+      navigation.goBack();
+    } catch (error) {
+      showError(error);
+    }
   };
 
   return (
@@ -31,6 +43,7 @@ const VoucherOption = <T extends keyof RootStackParamList>({
         paddingHorizontal: 16,
         margin: 4,
         marginHorizontal: 8,
+        gap: 4,
       }}
     >
       <HStack
@@ -51,7 +64,10 @@ const VoucherOption = <T extends keyof RootStackParamList>({
           </TouchableOpacity>
         )}
       </HStack>
-      <Text paddingLeft={6}> {voucherCode || 'No selected voucher'}</Text>
+      <HStack style={{ gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text paddingLeft={6}> {voucherCode || 'No selected voucher'}</Text>
+        {voucherCode && !viewOnly && <Feather name="x" size={18} color={ColorCode.PRIMARY} />}
+      </HStack>
     </VStack>
   );
 };

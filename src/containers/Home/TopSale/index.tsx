@@ -34,6 +34,10 @@ const TopSale = ({ navigation, route }: Props) => {
     navigation.navigate(Paths.PRODUCT_DETAIL, { productId: item.product.id });
   };
 
+  const availableTopSale = storeId
+    ? topSale?.filter((product) => product?.product.amount > 0, false)
+    : topSale;
+
   return (
     <VStack
       style={{
@@ -41,9 +45,9 @@ const TopSale = ({ navigation, route }: Props) => {
       }}
     >
       <Text style={{ fontWeight: 'bold', fontSize: 18, margin: 16 }}>Top Selling</Text>
-      {!isEmpty(topSale) && (
+      {!isEmpty(availableTopSale) && (
         <FlatList
-          data={topSale}
+          data={availableTopSale}
           numColumns={2}
           keyExtractor={(item) => item.product.id.toString()}
           refreshControl={

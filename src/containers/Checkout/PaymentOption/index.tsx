@@ -1,12 +1,20 @@
+import { Paths, RootStackParamList } from '@appConfig/paths';
 import { MaterialIcons } from '@expo/vector-icons';
 import { PaymentMethodTitle } from '@queries';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { HStack, Icon, Text, VStack } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 
-type Props = { viewOnly?: boolean; paymentMethod: string };
+type Props = {
+  viewOnly?: boolean;
+  paymentMethod: string;
+  navigation?: NativeStackNavigationProp<RootStackParamList, Paths.CHECKOUT>;
+};
 
-const PaymentOption = ({ viewOnly, paymentMethod }: Props) => {
-  const handleChange = () => {};
+const PaymentOption = ({ viewOnly, paymentMethod, navigation }: Props) => {
+  const handleChange = () => {
+    navigation.navigate(Paths.CHOOSE_PAYMENT);
+  };
   return (
     <VStack
       style={{

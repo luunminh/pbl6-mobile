@@ -1,29 +1,27 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
+import { MaterialIcons } from '@expo/vector-icons';
 import { UpdateProfilePayload, useUpdateProfile } from '@queries';
+import { useUploadAvatar } from '@queries/File';
 import { useGetProfile } from '@queries/Profile/useGetProfile';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GenderValue, isEmpty } from '@shared';
+import { useToastify } from '@shared/hooks';
+import * as ImagePicker from 'expo-image-picker';
+import { useFormik } from 'formik';
 import {
-  Avatar,
   Button,
   CheckIcon,
   FormControl,
-  HStack,
   Icon,
   Input,
   Select,
   Text,
-  VStack,
+  VStack
 } from 'native-base';
-import { ProfileFormField, ProfileFormSchema, ProfileFormType } from './helpers';
-import { useFormik } from 'formik';
-import { useToastify } from '@shared/hooks';
-import { LoadingContainer } from 'src/containers/StartupContainers';
-import { MaterialIcons } from '@expo/vector-icons';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
-import { useUploadAvatar } from '@queries/File';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { LoadingContainer } from 'src/containers/StartupContainers';
+import { ProfileFormField, ProfileFormSchema, ProfileFormType } from './helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.EDIT_PROFILE>;
 
@@ -40,7 +38,6 @@ const EditProfile = ({ navigation, route }: Props) => {
     isSuccess,
   } = useUploadAvatar({
     onSuccess({ data }) {
-      console.log({ data });
       updateProfile({ avatarUrl: data.url });
     },
     onError(error) {
@@ -48,9 +45,7 @@ const EditProfile = ({ navigation, route }: Props) => {
     },
   });
 
-  useEffect(() => {
-    console.log({ isSuccess });
-  }, [isSuccess]);
+  useEffect(() => {}, [isSuccess]);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -78,6 +73,7 @@ const EditProfile = ({ navigation, route }: Props) => {
     onSuccess: () => {
       handleInvalidateProfile();
       showSuccess('Update Successfully!');
+      navigation.popToTop();
     },
     onError: (error) => showError(error?.message),
   });
@@ -115,20 +111,6 @@ const EditProfile = ({ navigation, route }: Props) => {
             </Text>
           </VStack>
           <VStack space={1} mt={4} w={'350'}>
-            <HStack
-              px={5}
-              space={12}
-              alignItems={'center'}
-              borderRadius={12}
-              h={'100'}
-              bgColor={'primary.200'}
-            >
-              <Avatar size={90} bg={'gray.300'} source={{ uri: avatar || profile.avatarUrl }} />
-
-              <Button bgColor={'primary.50'} onPress={pickImage}>
-                Change your avatar
-              </Button>
-            </HStack>
             <VStack justifyContent={'space-between'} flexDirection={'row'}>
               <FormControl
                 isRequired

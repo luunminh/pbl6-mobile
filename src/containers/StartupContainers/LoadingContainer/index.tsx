@@ -1,7 +1,5 @@
-import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Center, Spinner, Text } from 'native-base';
+import { Center, Spinner } from 'native-base';
 
 type Props = {};
 

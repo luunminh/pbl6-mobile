@@ -3,6 +3,7 @@ import noPhoto from 'src/assets/image/no-photo.png';
 import category from 'src/assets/image/categories.png';
 import homeBg from 'src/assets/image/homeBg.png';
 import primaryBg from 'src/assets/image/primaryBg.png';
+import more from 'src/assets/image/more.png';
 
 export const IMAGES = {
   logo,
@@ -10,4 +11,5 @@ export const IMAGES = {
   category,
   homeBg,
   primaryBg,
+  more,
 };

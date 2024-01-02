@@ -28,7 +28,7 @@ export function useGetProductTopSale(
     {
       queryFn: handleGetCartList,
       notifyOnChangeProps: ['data', 'isFetching'],
-      enabled: !!options.storeId,
+      enabled: true,
       ...options,
     },
   );

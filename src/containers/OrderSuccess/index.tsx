@@ -1,13 +1,12 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button, HStack, Stack, Text, VStack } from 'native-base';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { ColorCode } from '@appConfig/theme';
+import { Feather } from '@expo/vector-icons';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Button, HStack, Text, VStack } from 'native-base';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.ORDER_SUCCESS>;
 
 const OrderSuccess = ({ navigation, route }: Props) => {
-  console.log('navigation', navigation);
   return (
     <VStack
       w={'100%'}

@@ -7,6 +7,7 @@ import Checkout from '../Checkout';
 import EditDeliveryInfo from '../EditDeliveryInfo';
 import ChooseVoucher from '../ChooseVoucher';
 import OrderSuccess from '../OrderSuccess';
+import ChoosePayment from '../ChoosePayment';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
@@ -45,6 +46,11 @@ const CartRouting = ({ navigation, route }: Props) => {
         name={Paths.ORDER_SUCCESS}
         component={OrderSuccess}
         options={{ headerShown: false }}
+      />
+       <CartStack.Screen
+        name={Paths.CHOOSE_PAYMENT}
+        component={ChoosePayment}
+        options={{ headerShown: true, title: 'Choose Payment method' }}
       />
     </CartStack.Navigator>
   );
