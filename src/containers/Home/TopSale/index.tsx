@@ -56,7 +56,10 @@ const TopSale = ({ navigation, route }: Props) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               key={item.product.id}
-              onPress={() => handlePress(item)}
+              onPress={(e) => {
+                e.stopPropagation();
+                handlePress(item);
+              }}
               style={{
                 width: '50%',
                 padding: 6,

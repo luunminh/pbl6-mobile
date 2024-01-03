@@ -98,7 +98,15 @@ const ChooseStore = ({ navigation, route }: Props) => {
           )}
         />
       ) : (
-        <Text textAlign="center">No Store Found</Text>
+        <Text
+          textAlign="center"
+          fontWeight={'bold'}
+          color={ColorCode.GREY_500}
+          m={4}
+          fontSize={'xl'}
+        >
+          No Store Found
+        </Text>
       )}
     </View>
   );

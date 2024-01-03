@@ -28,6 +28,7 @@ const ProductDetail = ({ navigation, route }: Props) => {
         backgroundColor: ColorCode.WHITE,
         flex: 1,
         padding: 16,
+        paddingTop: 0,
       }}
     >
       <Image

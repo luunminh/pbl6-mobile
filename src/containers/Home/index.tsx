@@ -2,7 +2,7 @@ import { IMAGES } from '@appConfig/images';
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
 import { ChooseStoreHeader } from '@components';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { CategoryListResponse, useGetAllCategoryLazy } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useToastify } from '@shared';
@@ -15,7 +15,12 @@ type Props = NativeStackScreenProps<RootStackParamList, Paths.HOME>;
 
 const Home = ({ navigation, route }: Props) => {
   const { showError } = useToastify();
-  const { categoryData, setParams, loading, handleInvalidateCategories } = useGetAllCategoryLazy({
+  const {
+    categoryData = [],
+    setParams,
+    loading,
+    handleInvalidateCategories,
+  } = useGetAllCategoryLazy({
     onError: (error) => showError(error.message),
   });
 
@@ -73,11 +78,11 @@ const Home = ({ navigation, route }: Props) => {
             padding: 8,
           }}
         >
-          <Feather
+          <MaterialIcons
             name="search"
-            size={24}
+            size={20}
             color={ColorCode.GREY_300}
-            style={{ alignSelf: 'center' }}
+            style={{ alignSelf: 'center', marginRight: 10 }}
           />
           <Text
             style={{

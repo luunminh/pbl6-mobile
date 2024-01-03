@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { ImageBackground, RefreshControl } from 'react-native';
 import CartFooter from './CartFooter';
 import CartItem from './CartItem';
+import { ColorCode } from '@appConfig/theme';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
 const Cart = ({ navigation, route }: Props) => {
@@ -45,7 +46,15 @@ const Cart = ({ navigation, route }: Props) => {
           renderItem={({ item }) => <CartItem cart={item} navigation={navigation} route={route} />}
         />
       ) : (
-        <Text textAlign="center">No Product in Cart yet</Text>
+        <Text
+          textAlign="center"
+          fontWeight={'bold'}
+          color={ColorCode.GREY_500}
+          m={4}
+          fontSize={'xl'}
+        >
+          No Product in Cart yet
+        </Text>
       )}
       <CartFooter navigation={navigation} route={route} />
     </View>

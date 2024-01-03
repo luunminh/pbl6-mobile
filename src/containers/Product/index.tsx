@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import ProductItem from './ProductItem';
 import { LoadingContainer } from '../StartupContainers';
+import { ColorCode } from '@appConfig/theme';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.PRODUCT>;
 
@@ -74,7 +75,10 @@ const Product = ({ navigation, route }: Props) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => handlePress(item)}
+              onPress={(e) => {
+                e.stopPropagation();
+                handlePress(item);
+              }}
               style={{
                 width: '50%',
                 padding: 6,
@@ -86,7 +90,15 @@ const Product = ({ navigation, route }: Props) => {
           )}
         />
       ) : (
-        <Text textAlign="center">No Product Found</Text>
+        <Text
+          textAlign="center"
+          fontWeight={'bold'}
+          color={ColorCode.GREY_500}
+          m={4}
+          fontSize={'xl'}
+        >
+          No Products Found
+        </Text>
       )}
     </View>
   );

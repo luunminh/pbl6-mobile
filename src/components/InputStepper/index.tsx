@@ -13,24 +13,27 @@ type Props = {
 
 const InputStepper = ({ handleIncrease, handleDecrease, value, disableIncrease }: Props) => {
   return (
-    <HStack style={{ gap: 4 }}>
+    <HStack style={{ gap: 4 }} py={2}>
       <TouchableOpacity style={{ justifyContent: 'center' }} onPress={handleDecrease}>
         <Icon
           as={<MaterialIcons name="remove" />}
-          size={5}
+          size={6}
           color="primary.400"
           style={{ borderWidth: 1, borderColor: ColorCode.PRIMARY, borderRadius: 32 }}
         />
       </TouchableOpacity>
-      <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{value}</Text>
+      <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{value}</Text>
       <TouchableOpacity
         style={{ justifyContent: 'center' }}
         disabled={disableIncrease}
-        onPress={!disableIncrease && handleIncrease}
+        onPress={(e) => {
+          e.stopPropagation();
+          !disableIncrease && handleIncrease;
+        }}
       >
         <Icon
           as={<MaterialIcons name="add" />}
-          size={5}
+          size={6}
           color="white"
           style={{
             backgroundColor: disableIncrease ? ColorCode.GREY_200 : ColorCode.PRIMARY,

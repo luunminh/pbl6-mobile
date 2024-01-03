@@ -73,6 +73,11 @@ export const theme = extendTheme({
       baseStyle: {
         borderRadius: 12,
       },
+      variants: {
+        solid: {
+          bgColor: ColorCode.PRIMARY,
+        },
+      },
     },
     Input: {
       baseStyle: {

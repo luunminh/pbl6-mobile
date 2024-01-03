@@ -1,7 +1,7 @@
 import { IMAGES } from '@appConfig/images';
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
-import { Button, InputStepper } from '@components';
+import { InputStepper } from '@components';
 import {
   useAddProductToCart,
   useDecreaseProductCart,
@@ -12,7 +12,7 @@ import { ProductResponse } from '@queries/Product';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StoreService, formatMoney, useToastify } from '@shared';
-import { Box, Image, Text } from 'native-base';
+import { Box, Button, Image, Text } from 'native-base';
 import { useEffect, useMemo, useState } from 'react';
 import { QuantityOptions } from 'src/containers/Cart/CartItem/helpers';
 
@@ -30,6 +30,7 @@ const ProductItem = ({ product, storeId }: Props) => {
   const { addProduct: increaseProduct, isLoading: isUpdateProductQuantity } = useAddProductToCart({
     onSuccess() {
       handleInvalidateCart();
+      showSuccess('Added to your cart!');
     },
     onError(error) {
       showError(error.message);
@@ -96,7 +97,21 @@ const ProductItem = ({ product, storeId }: Props) => {
         backgroundColor: ColorCode.WHITE,
         borderRadius: 16,
         alignItems: 'center',
-        padding: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 20,
+      }}
+      borderColor="coolGray.200"
+      borderWidth="1"
+      _dark={{
+        borderColor: 'coolGray.600',
+        backgroundColor: 'gray.700',
+      }}
+      _web={{
+        shadow: 2,
+        borderWidth: 0,
+      }}
+      _light={{
+        backgroundColor: 'gray.50',
       }}
     >
       <Image
@@ -104,14 +119,21 @@ const ProductItem = ({ product, storeId }: Props) => {
         alt={product.name}
         size="xl"
         borderRadius={32}
+        mb={2}
       />
-      <Text numberOfLines={2} style={{ fontWeight: 'bold', textAlign: 'center' }}>
+      <Text numberOfLines={2} style={{ textAlign: 'left', fontWeight: 'bold' }} height={10}>
         {product.name}
       </Text>
-      <Text numberOfLines={2} style={{ textAlign: 'center', fontSize: 12 }}>
+      <Text
+        marginTop={1}
+        marginBottom={-1}
+        numberOfLines={2}
+        style={{ textAlign: 'left', fontSize: 12, lineHeight: 18 }}
+        height={12}
+      >
         {product.description}
       </Text>
-      <Text style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: 8 }}>
+      <Text style={{ fontWeight: 'bold', textAlign: 'left', marginBottom: 8, fontSize: 16 }}>
         {formatMoney(product.price)}
       </Text>
       {!!cartItem ? (
@@ -123,10 +145,13 @@ const ProductItem = ({ product, storeId }: Props) => {
         />
       ) : (
         <Button
-          handlePress={handleAddCart}
-          disable={product?.productStore?.amount === 0}
-          label="Add to Cart"
-        />
+          onPress={handleAddCart}
+          disabled={product?.productStore?.amount === 0}
+          textAlign={'center'}
+          width={'160px'}
+        >
+          Add to Cart
+        </Button>
       )}
     </Box>
   );

@@ -53,9 +53,11 @@ const OrderItem = ({ order }: Props) => {
         <Text fontSize={12} paddingLeft={87} paddingTop={1}>
           View more ...
         </Text>
-        <Divider />
+        <Divider my={2} />
         <HStack style={{ justifyContent: 'space-between' }}>
-          <Text fontSize={12}>{order?.orderDetails?.length} items</Text>
+          <Text fontSize={12}>
+            {order?.orderDetails?.length} {`${order?.orderDetails?.length > 1 ? 'items' : 'item'}`}
+          </Text>
           <HStack style={{ gap: 4 }}>
             <Text>Total:</Text>
             {order?.total && (

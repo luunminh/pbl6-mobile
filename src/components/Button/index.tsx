@@ -15,7 +15,7 @@ const Button = ({ label, handlePress, disable }: Props) => {
     <TouchableOpacity
       onPress={handlePress}
       disabled={disable}
-      style={{ backgroundColor: ColorCode.PRIMARY, padding: 12, borderRadius: 16 }}
+      style={{ backgroundColor: ColorCode.PRIMARY, padding: 12, borderRadius: 16, width: '100%' }}
     >
       <Text color="white" fontWeight="bold" textAlign="center">
         {label}

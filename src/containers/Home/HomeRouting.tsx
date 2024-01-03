@@ -35,7 +35,7 @@ const HomeRouting = ({ navigation, route }: Props) => {
       <HomeStack.Screen
         name={Paths.PRODUCT_DETAIL}
         component={ProductDetail}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerTitle: 'Product Detail' }}
       />
       <HomeStack.Screen
         name={Paths.SEARCH}

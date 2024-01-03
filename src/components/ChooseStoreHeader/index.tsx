@@ -36,6 +36,7 @@ const ChooseStoreHeader = <T extends keyof RootStackParamList>({
         paddingHorizontal: 24,
         paddingTop: 32,
         paddingBottom: 16,
+        overflow: 'hidden',
       }}
     >
       <TouchableOpacity
@@ -47,9 +48,9 @@ const ChooseStoreHeader = <T extends keyof RootStackParamList>({
       >
         <Text style={{ fontSize: 14, fontWeight: 'bold', color: color }}>Store:</Text>
         <HStack style={{ gap: 4 }}>
-          <Icon as={<MaterialIcons name="location-pin" />} size={5} color={color} />
+          <Icon as={<MaterialIcons name="location-pin" />} size={4} mt={1} color={color} />
           <Text style={{ fontSize: 14, fontWeight: 'bold', color: color }}>
-            {storeName ? storeName : 'Unset'}
+            {storeName ? storeName : 'Click to select a store'}
           </Text>
         </HStack>
       </TouchableOpacity>
