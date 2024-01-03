@@ -16,7 +16,7 @@ import {
 } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { useFormik, Form } from 'formik';
+import { useFormik } from 'formik';
 import { SignInFormField, SignInFormSchema, SignInFormType, signInInitialValues } from './helpers';
 import { useLogin } from '@queries';
 import { AuthService, isEmpty } from '@shared';
@@ -27,8 +27,8 @@ import { LoadingContainer } from 'src/containers/StartupContainers';
 import { setAuthenticated, setCurrentRole, setProfile } from '@redux/auth/authSlice';
 import { connect, useDispatch } from 'react-redux';
 import { IRootState } from '@redux/store';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useToastify } from '@shared/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.SIGN_IN> &
   ReturnType<typeof mapStateToProps> &
@@ -37,11 +37,13 @@ type Props = NativeStackScreenProps<RootStackParamList, Paths.SIGN_IN> &
 const SignIn = ({ navigation, route, isAuthenticated }: Props) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const { showSuccess, showError } = useToastify();
+  const { showError } = useToastify();
 
   const handleOnSubmit = (payload: SignInFormType) => {
     login(payload);
   };
+
+  const queryClient = useQueryClient();
 
   const { touched, errors, getFieldProps, handleSubmit, handleChange } = useFormik<SignInFormType>({
     initialValues: signInInitialValues,
@@ -52,9 +54,10 @@ const SignIn = ({ navigation, route, isAuthenticated }: Props) => {
   const { isLoading, login, isError } = useLogin({
     onSuccess: async (data) => {
       await AuthService.setToken(data.accessToken);
-      dispatch(setAuthenticated(true));
 
       setTimeout(() => {
+        dispatch(setAuthenticated(true));
+        queryClient.invalidateQueries();
         navigation.navigate(Paths.HOME);
       }, 2000);
     },
