@@ -1,6 +1,6 @@
 import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
-import { TopSaleResponse, useGetProductTopSale } from '@queries';
+import { TopSaleResponse, useGetTopSells } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StoreService, isEmpty, useToastify } from '@shared';
 import { Text, VStack } from 'native-base';
@@ -23,20 +23,24 @@ const TopSale = ({ navigation, route }: Props) => {
     return unsubscribe;
   }, [navigation]);
 
-  const { topSale, isLoading, handleInvalidateProducts } = useGetProductTopSale({
-    onError(err) {
-      showError(err.message);
-    },
-    storeId: storeId,
-  });
+  const { topSells, setParams, isFetching, handleInvalidateTopSellsList } = useGetTopSells();
+
+  useEffect(() => {
+    if (storeId) {
+      setParams({ storeId: storeId });
+    } else {
+      setParams({ storeId: null });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeId]);
 
   const handlePress = (item: TopSaleResponse) => {
     navigation.navigate(Paths.PRODUCT_DETAIL, { productId: item.product.id });
   };
 
   const availableTopSale = storeId
-    ? topSale?.filter((product) => product?.product.amount > 0, false)
-    : topSale;
+    ? topSells?.filter((product) => product?.product.amount > 0, false)
+    : topSells;
 
   return (
     <VStack
@@ -51,7 +55,7 @@ const TopSale = ({ navigation, route }: Props) => {
           numColumns={2}
           keyExtractor={(item) => item.product.id.toString()}
           refreshControl={
-            <RefreshControl refreshing={isLoading} onRefresh={handleInvalidateProducts} />
+            <RefreshControl refreshing={isFetching} onRefresh={handleInvalidateTopSellsList} />
           }
           renderItem={({ item }) => (
             <TouchableOpacity

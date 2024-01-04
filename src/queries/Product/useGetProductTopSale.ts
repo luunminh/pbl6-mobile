@@ -1,66 +1,41 @@
-import { QueryFunction, UseQueryOptions, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { ApiKey } from '../keys';
-import { ApiResponseType, Callback, responseWrapper } from '@shared';
-import { TopSaleResponse } from './type';
-import { ProductApi } from '.';
+import { ApiKey } from '@queries/keys';
+import { isEmpty, responseWrapper } from '@shared';
+import { UseQueryOptions, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { ProductApi, TopSaleResponse, TopSellsParams } from '.';
 
-export function useGetProductTopSale(
-  options?: UseQueryOptions<ApiResponseType<TopSaleResponse[]>, Error, TopSaleResponse[]> & {
-    storeId?: string;
-    onSuccessCallback?: Callback;
-    onErrorCallback?: Callback;
-  },
-) {
-  const handleGetCartList: QueryFunction<ApiResponseType<TopSaleResponse[]>> = () =>
-    responseWrapper<ApiResponseType<TopSaleResponse[]>>(ProductApi.getProductTopSale, [
-      options?.storeId,
-    ]);
+export function useGetTopSells(options?: UseQueryOptions<TopSaleResponse[], Error>) {
+  const [params, setParams] = useState<TopSellsParams>({});
 
   const {
     data,
     error,
     isError,
-    isFetching: isLoading,
-    isSuccess,
-  } = useQuery<ApiResponseType<TopSaleResponse[]>, Error, TopSaleResponse[]>(
-    [ApiKey.TOP_SALE, options?.storeId],
-    {
-      queryFn: handleGetCartList,
-      notifyOnChangeProps: ['data', 'isFetching'],
-      enabled: true,
-      ...options,
+    isFetching,
+    refetch: onGetTopSells,
+  } = useQuery<TopSaleResponse[], Error>([ApiKey.TOP_SALE, params], {
+    queryFn: (query) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      return responseWrapper<TopSaleResponse[]>(ProductApi.getProductTopSale, [params]);
     },
-  );
-
-  useEffect(() => {
-    if (data && isSuccess) {
-      if (options?.onSuccessCallback) {
-        options.onSuccessCallback(data);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isSuccess]);
-
-  useEffect(() => {
-    if (isError) {
-      if (options?.onErrorCallback) {
-        options.onErrorCallback(error);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError]);
+    notifyOnChangeProps: ['data', 'isFetching'],
+    keepPreviousData: true,
+    enabled: !isEmpty(params),
+    ...options,
+  });
 
   const queryClient = useQueryClient();
 
-  const handleInvalidateProducts = () => queryClient.invalidateQueries([ApiKey.TOP_SALE]);
+  const handleInvalidateTopSellsList = () => queryClient.invalidateQueries([ApiKey.TOP_SALE]);
 
   return {
-    topSale: data,
-    isError,
+    topSells: data,
+    params,
     error,
-    isLoading: isLoading,
-    isSuccess,
-    handleInvalidateProducts,
+    isError,
+    isFetching,
+    onGetTopSells,
+    setParams,
+    handleInvalidateTopSellsList,
   };
 }

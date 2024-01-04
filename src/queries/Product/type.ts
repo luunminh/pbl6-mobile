@@ -23,6 +23,10 @@ export type ProductTopSale = Omit<ProductResponse, 'productStore'> & {
   amountOfProductStore: number;
 };
 
+export type TopSellsParams = {
+  storeId?: string;
+};
+
 export interface TopSaleResponse {
   totalQuantitySold: number;
   product: ProductTopSale;
