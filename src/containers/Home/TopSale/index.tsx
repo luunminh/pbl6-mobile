@@ -23,7 +23,7 @@ const TopSale = ({ navigation, route }: Props) => {
     return unsubscribe;
   }, [navigation]);
 
-  const { topSells, setParams, isFetching, handleInvalidateTopSellsList } = useGetTopSells();
+  const { topSells, setParams, isFetching } = useGetTopSells();
 
   useEffect(() => {
     if (storeId) {
@@ -58,9 +58,6 @@ const TopSale = ({ navigation, route }: Props) => {
           data={availableTopSale}
           numColumns={2}
           keyExtractor={(item) => item.product.id.toString()}
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={handleInvalidateTopSellsList} />
-          }
           renderItem={({ item }) => (
             <TouchableOpacity
               key={item.product.id}

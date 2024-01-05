@@ -3,7 +3,7 @@ import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
 import { ChooseStoreHeader } from '@components';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
-import { CategoryListResponse, useGetAllCategoryLazy } from '@queries';
+import { CategoryListResponse, useGetAllCategoryLazy, useGetTopSells } from '@queries';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useToastify } from '@shared';
 import { Box, FlatList, Image, ScrollView, Text } from 'native-base';
@@ -23,6 +23,8 @@ const Home = ({ navigation, route }: Props) => {
   } = useGetAllCategoryLazy({
     onError: (error) => showError(error.message),
   });
+  const { isFetching, handleInvalidateTopSellsList } = useGetTopSells();
+
 
   useEffect(() => {
     setParams({});
@@ -58,6 +60,9 @@ const Home = ({ navigation, route }: Props) => {
       style={{
         backgroundColor: ColorCode.WHITE,
       }}
+      refreshControl={
+        <RefreshControl refreshing={isFetching} onRefresh={handleInvalidateTopSellsList} />
+      }
     >
       <ImageBackground
         source={IMAGES.homeBg}

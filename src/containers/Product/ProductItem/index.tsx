@@ -1,5 +1,4 @@
 import { IMAGES } from '@appConfig/images';
-import { Paths, RootStackParamList } from '@appConfig/paths';
 import { ColorCode } from '@appConfig/theme';
 import { InputStepper } from '@components';
 import {
@@ -9,11 +8,10 @@ import {
   useGetCart,
 } from '@queries';
 import { ProductResponse } from '@queries/Product';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StoreService, formatMoney, useToastify } from '@shared';
-import { Box, Button, Image, Text } from 'native-base';
-import { useEffect, useMemo, useState } from 'react';
+import { formatMoney, useToastify } from '@shared';
+import {  Box, Button, Image, Text } from 'native-base';
+import { useMemo } from 'react';
+import { Alert } from 'react-native';
 import { QuantityOptions } from 'src/containers/Cart/CartItem/helpers';
 
 type Props = {
@@ -38,7 +36,12 @@ const ProductItem = ({ product, storeId }: Props) => {
   });
 
   const handleAddCart = () => {
-    increaseProduct({ quantity: '1', productId: product.id });
+    if (!storeId) {
+      Alert.alert('Warning', 'You have to select a store before add product to cart');
+      return;
+    } else {
+      increaseProduct({ quantity: '1', productId: product.id });
+    }
   };
 
   const { decreaseProduct } = useDecreaseProductCart({

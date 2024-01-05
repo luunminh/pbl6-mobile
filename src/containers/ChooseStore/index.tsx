@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import StoreItem from './StoreItem';
 import { LoadingContainer } from '../StartupContainers';
+import { useQueryClient } from '@tanstack/react-query';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CHOOSE_STORE>;
 
@@ -31,7 +32,7 @@ const ChooseStore = ({ navigation, route }: Props) => {
       onError: (error) => showError(error.message),
     });
 
-  const { handleInvalidateCart } = useGetCart({ storeId: storeId });
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setParams({});
@@ -50,7 +51,7 @@ const ChooseStore = ({ navigation, route }: Props) => {
     try {
       await StoreService.setStoreName(store.address);
       await StoreService.setStoreId(store.id);
-      handleInvalidateCart();
+      queryClient.invalidateQueries();
       navigation.goBack();
     } catch (error) {
       showError(error);
