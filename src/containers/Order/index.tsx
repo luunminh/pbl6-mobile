@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import OrderItem from './OrderItem';
 import { ColorCode } from '@appConfig/theme';
+import { LoadingContainer } from '../StartupContainers';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
 const Order = ({ navigation, route }: Props) => {
@@ -33,6 +34,10 @@ const Order = ({ navigation, route }: Props) => {
   const handleEndReach = () => {
     fetchNextPage();
   };
+
+  if (loading) {
+    return <LoadingContainer />;
+  }
 
   return (
     <View

@@ -42,6 +42,10 @@ const TopSale = ({ navigation, route }: Props) => {
     ? topSells?.filter((product) => product?.product.amount > 0, false)
     : topSells;
 
+  if (isFetching) {
+    return <LoadingContainer />;
+  }
+
   return (
     <VStack
       style={{

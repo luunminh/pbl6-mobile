@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "malt",
+    "name": "Malt Store",
     "slug": "pbl6-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/image/big-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/image/big-logo.png",
+      "image": "./src/assets/image/splash",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -9,6 +9,7 @@ import { FlatList, HStack, Icon, Input, Text, View } from 'native-base';
 import { useEffect, useState } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import StoreItem from './StoreItem';
+import { LoadingContainer } from '../StartupContainers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CHOOSE_STORE>;
 
@@ -59,6 +60,10 @@ const ChooseStore = ({ navigation, route }: Props) => {
   const handleBack = () => {
     navigation.goBack();
   };
+
+  if (loading) {
+    return <LoadingContainer />;
+  }
 
   return (
     <View

@@ -10,6 +10,7 @@ import { ImageBackground, RefreshControl } from 'react-native';
 import CartFooter from './CartFooter';
 import CartItem from './CartItem';
 import { ColorCode } from '@appConfig/theme';
+import { LoadingContainer } from '../StartupContainers';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
 const Cart = ({ navigation, route }: Props) => {
@@ -24,6 +25,10 @@ const Cart = ({ navigation, route }: Props) => {
   }, [navigation]);
 
   const { cart, handleInvalidateCart, isLoading } = useGetCart({ storeId: storeId });
+
+  if (isLoading) {
+    return <LoadingContainer />;
+  }
 
   return (
     <View

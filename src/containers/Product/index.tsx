@@ -56,6 +56,10 @@ const Product = ({ navigation, route }: Props) => {
     ? productData.filter((product) => product?.productStore?.amount > 0, false)
     : productData;
 
+  if (loading) {
+    return <LoadingContainer />;
+  }
+
   return (
     <View
       style={{
