@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pbl6-mobile",
+    "name": "malt",
     "slug": "pbl6-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,13 +22,32 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/image/big-logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "config": {
+        "networkSecurityConfig": "./network_security_config.xml"
+      },
+      "package": "com.luunminh.pbl6mobile"
     },
     "web": {
       "favicon": "./src/assets/image/big-logo.png"
     },
     "experiments": {
       "tsconfigPaths": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f31b6b51-549e-49ec-917f-5e47b034e6a0"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ]
   }
 }

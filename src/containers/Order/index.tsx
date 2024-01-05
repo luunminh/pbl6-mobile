@@ -7,6 +7,7 @@ import { FlatList, Text, View } from 'native-base';
 import { useEffect } from 'react';
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import OrderItem from './OrderItem';
+import { ColorCode } from '@appConfig/theme';
 type Props = NativeStackScreenProps<RootStackParamList, Paths.CART>;
 
 const Order = ({ navigation, route }: Props) => {
@@ -60,7 +61,15 @@ const Order = ({ navigation, route }: Props) => {
           )}
         />
       ) : (
-        <Text textAlign="center">You had not place any order yet</Text>
+        <Text
+          textAlign="center"
+          fontWeight={'bold'}
+          color={ColorCode.GREY_500}
+          m={4}
+          fontSize={'xl'}
+        >
+          You had not place any order yet
+        </Text>
       )}
     </View>
   );
